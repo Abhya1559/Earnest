@@ -5,6 +5,7 @@ import { env } from "../config/env.js";
 
 import { User } from "../entities/User.js";
 import { Task } from "../entities/Task.js";
+import { RefreshToken } from "../entities/RefreshToken.js";
 
 export const AppDataSource = new DataSource({
   type: "mysql",
@@ -20,5 +21,5 @@ export const AppDataSource = new DataSource({
   synchronize: true,
   logging: false,
 
-  entities: [User, Task],
+  entities: [User, Task, RefreshToken],
 });

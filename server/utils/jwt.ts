@@ -11,3 +11,9 @@ export const generateToken = (payload: TokenPayload): string => {
     expiresIn: "1h", // ✅ FORCE TYPE
   });
 };
+
+export const generateRefreshToken = (payload: TokenPayload) => {
+  return jwt.sign(payload, env.REFRESH_SECRET, {
+    expiresIn: "7d",
+  });
+};
