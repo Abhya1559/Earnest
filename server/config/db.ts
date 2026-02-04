@@ -1,24 +1,24 @@
-import { createPool, type Pool } from "mysql2/promise";
-import dotenv from "dotenv";
+import "reflect-metadata";
+import { DataSource } from "typeorm";
 
-dotenv.config();
+import { env } from "../config/env.js";
 
-if (
-  !process.env.DB_HOST ||
-  !process.env.DB_USER ||
-  !process.env.DB_PASSWORD ||
-  !process.env.DB_NAME
-) {
-  throw new Error("Missing database environment variables");
-}
+import { User } from "../entities/User.js";
+import { Task } from "../entities/Task.js";
 
-// Create typed pool
-export const db: Pool = createPool({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
+export const AppDataSource = new DataSource({
+  type: "mysql",
 
-  waitForConnections: true,
-  connectionLimit: 10,
+  host: env.DB_HOST,
+  port: env.DB_PORT,
+
+  username: env.DB_USER,
+  password: env.DB_PASSWORD,
+
+  database: env.DB_NAME,
+
+  synchronize: true,
+  logging: false,
+
+  entities: [User, Task],
 });
